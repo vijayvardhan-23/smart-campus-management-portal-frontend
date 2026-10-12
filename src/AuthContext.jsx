@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import api from './api'
+import api, { apiConfigured } from './api'
 
 const AuthContext = createContext(null)
 
@@ -12,6 +12,9 @@ export function AuthProvider({ children }) {
     setLoading(true)
     setError('')
     try {
+      if (!apiConfigured) {
+        throw new Error('This Vercel deployment needs VITE_API_BASE_URL set to your publicly hosted backend URL ending in /api. Save the variable and redeploy.')
+      }
       const { data } = await api.post('/auth/demo')
       localStorage.setItem('campus_token', data.token)
       localStorage.setItem('campus_user', JSON.stringify(data.user))
@@ -20,7 +23,7 @@ export function AuthProvider({ children }) {
       localStorage.removeItem('campus_token')
       localStorage.removeItem('campus_user')
       setUser(null)
-      setError(err?.response?.data?.error || 'The local demo could not connect. Start the backend with the local profile.')
+      setError(err?.response?.data?.error || err?.message || 'The campus demo could not connect.')
     } finally {
       setLoading(false)
     }

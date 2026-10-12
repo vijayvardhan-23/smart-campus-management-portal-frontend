@@ -1,5 +1,6 @@
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import { useAuth, AuthProvider } from './AuthContext'
+import { apiConfigured } from './api'
 import { LayoutDashboard, BookOpen, CalendarDays, ClipboardCheck, GraduationCap, Megaphone, MessageSquareText, PartyPopper, Users, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import Dashboard from './pages/Dashboard.jsx'
@@ -43,7 +44,7 @@ function PortalRoutes() {
 function DemoPortal() {
   const { user, loading, error, connectDemo } = useAuth()
   if (loading) return <div className="center-screen">Loading sample student and campus data…</div>
-  if (!user) return <main className="center-screen"><section className="panel"><h2>Campus demo is unavailable</h2><p>{error}</p><p>Start the backend with the local profile, then retry.</p><button className="primary-btn" onClick={connectDemo}>Retry connection</button></section></main>
+  if (!user) return <main className="center-screen"><section className="panel"><h2>Campus demo is unavailable</h2><p>{error}</p><p>{apiConfigured ? 'Check that the backend is running and try again.' : 'Set VITE_API_BASE_URL in Vercel to your public backend URL, then redeploy.'}</p><button className="primary-btn" onClick={connectDemo}>Retry connection</button></section></main>
   return <PortalRoutes/>
 }
 
