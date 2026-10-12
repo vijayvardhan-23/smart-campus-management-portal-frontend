@@ -2,9 +2,9 @@ import axios from 'axios'
 import { demoApiRequest } from './demoApi'
 
 const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
-export const apiConfigured = Boolean(configuredBaseUrl || import.meta.env.DEV)
-export const isDemoMode = Boolean(!configuredBaseUrl && import.meta.env.PROD)
-const baseURL = configuredBaseUrl || (import.meta.env.DEV ? 'http://localhost:8080/api' : undefined)
+export const apiConfigured = Boolean(configuredBaseUrl)
+export const isDemoMode = !configuredBaseUrl
+const baseURL = configuredBaseUrl
 
 const http = axios.create({ baseURL })
 http.interceptors.request.use(config => {

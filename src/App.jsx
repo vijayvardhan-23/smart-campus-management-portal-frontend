@@ -44,7 +44,7 @@ function PortalRoutes() {
 function DemoPortal() {
   const { user, loading, error, connectDemo } = useAuth()
   if (loading) return <div className="center-screen">Loading sample student and campus data…</div>
-  if (!user) return <main className="center-screen"><section className="panel"><h2>Campus demo is unavailable</h2><p>{error}</p><p>{apiConfigured ? 'Check that the backend is running and try again.' : 'Set VITE_API_BASE_URL in Vercel to your public backend URL, then redeploy.'}</p><button className="primary-btn" onClick={connectDemo}>Retry connection</button></section></main>
+  if (!user) return <main className="center-screen"><section className="panel"><h2>Campus demo is unavailable</h2><p>{error}</p><p>{apiConfigured ? 'Check that the backend is running and try again.' : 'Refresh the page to restart the browser demo.'}</p><button className="primary-btn" onClick={connectDemo}>Retry connection</button></section></main>
   return <PortalRoutes/>
 }
 
