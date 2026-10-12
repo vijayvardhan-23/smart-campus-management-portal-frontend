@@ -1,6 +1,6 @@
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import { useAuth, AuthProvider } from './AuthContext'
-import { apiConfigured } from './api'
+import { apiConfigured, isDemoMode } from './api'
 import { LayoutDashboard, BookOpen, CalendarDays, ClipboardCheck, GraduationCap, Megaphone, MessageSquareText, PartyPopper, Users, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import Dashboard from './pages/Dashboard.jsx'
@@ -27,7 +27,7 @@ function Shell({ children }) {
       <div className="sidebar-bottom"><div className="user-avatar">{String(user?.full_name||user?.fullName||'V').slice(0,1).toUpperCase()}</div><div className="user-meta"><b>{user?.full_name||user?.fullName||'Vijay Kumar'}</b><small>Sample student</small></div></div>
     </aside>
     {open && <div className="mobile-overlay" onClick={()=>setOpen(false)} />}
-    <main className="main-area"><header className="topbar"><button className="icon-btn mobile-menu" onClick={()=>setOpen(true)}><Menu size={20}/></button><div><span className="breadcrumb">Campus / </span><strong>Workspace</strong></div><span className="online"><i/> Connected</span></header><div className="page-content">{children}</div></main>
+    <main className="main-area"><header className="topbar"><button className="icon-btn mobile-menu" onClick={()=>setOpen(true)}><Menu size={20}/></button><div><span className="breadcrumb">Campus / </span><strong>Workspace</strong></div><span className={`online ${isDemoMode?'demo-online':''}`} title={isDemoMode?'Sample data is stored in this browser.':'Connected to the campus backend.'}><i/>{isDemoMode?'Browser demo':'Connected'}</span></header><div className="page-content">{children}</div></main>
   </div>
 }
 

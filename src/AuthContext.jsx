@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import api, { apiConfigured } from './api'
+import api from './api'
 
 const AuthContext = createContext(null)
 
@@ -12,9 +12,6 @@ export function AuthProvider({ children }) {
     setLoading(true)
     setError('')
     try {
-      if (!apiConfigured) {
-        throw new Error('This Vercel deployment needs VITE_API_BASE_URL set to your publicly hosted backend URL ending in /api. Save the variable and redeploy.')
-      }
       const { data } = await api.post('/auth/demo')
       localStorage.setItem('campus_token', data.token)
       localStorage.setItem('campus_user', JSON.stringify(data.user))
